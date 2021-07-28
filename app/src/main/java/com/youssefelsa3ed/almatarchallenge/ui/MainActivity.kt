@@ -1,7 +1,8 @@
-package com.youssefelsa3ed.almatarchallenge
+package com.youssefelsa3ed.almatarchallenge.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.youssefelsa3ed.almatarchallenge.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
