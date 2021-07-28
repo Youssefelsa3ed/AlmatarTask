@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">AlmatarChallenge</string>
+    <string name="retry">Retry</string>
+    <string name="timeout">Timeout</string>
+    <string name="no_results">No results 😓</string>
+    <string name="woops_error">😨 Wooops %s</string>
+    <string name="search_hint">Search for %s</string>
+    <string name="details">Details</string>
 </resources>

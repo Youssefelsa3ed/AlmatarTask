@@ -3,7 +3,7 @@ package com.youssefelsa3ed.almatarchallenge.model
 import android.os.Parcel
 import android.os.Parcelable
 
-data class Docs(
+data class Doc(
     val authorName: List<String?>? = null,
     val authorKey: List<String?>? = null,
     val isbn: List<String?>? = null,
@@ -30,12 +30,12 @@ data class Docs(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<Docs> {
-        override fun createFromParcel(parcel: Parcel): Docs {
-            return Docs(parcel)
+    companion object CREATOR : Parcelable.Creator<Doc> {
+        override fun createFromParcel(parcel: Parcel): Doc {
+            return Doc(parcel)
         }
 
-        override fun newArray(size: Int): Array<Docs?> {
+        override fun newArray(size: Int): Array<Doc?> {
             return arrayOfNulls(size)
         }
     }

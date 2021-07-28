@@ -2,28 +2,30 @@ package com.youssefelsa3ed.almatarchallenge.data
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.youssefelsa3ed.almatarchallenge.api.RepoSearchResult
+import com.youssefelsa3ed.almatarchallenge.api.Result
 import com.youssefelsa3ed.almatarchallenge.api.SearchBooksModel
 import com.youssefelsa3ed.almatarchallenge.api.SearchService
-import com.youssefelsa3ed.almatarchallenge.model.Docs
+import com.youssefelsa3ed.almatarchallenge.model.Doc
 
 class ItemsPagingSource(
     private val backend: SearchService,
     private val queryKey: String,
     private val queryVal: String,
-) : PagingSource<Int, Docs>() {
+) : PagingSource<Int, Doc>() {
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Docs> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Doc> {
         val nextPageNumber = params.key ?: 1
-        with(backend.searchBooks(
-            SearchBooksModel(
-                queryKey,
-                queryVal,
-                nextPageNumber
-            ))
+        with(
+            backend.searchBooks(
+                SearchBooksModel(
+                    queryKey,
+                    queryVal,
+                    nextPageNumber
+                )
+            )
         ) {
             when (this) {
-                is RepoSearchResult.Success -> {
+                is Result.Success -> {
                     val nextKey = if (data.isNullOrEmpty())
                         null
                     else
@@ -34,14 +36,14 @@ class ItemsPagingSource(
                         nextKey = nextKey
                     )
                 }
-                is RepoSearchResult.Error -> {
+                is Result.Error -> {
                     return LoadResult.Error(exception)
                 }
             }
         }
     }
 
-    override fun getRefreshKey(state: PagingState<Int, Docs>): Int? {
+    override fun getRefreshKey(state: PagingState<Int, Doc>): Int? {
         // Try to find the page key of the closest page to anchorPosition, from
         // either the prevKey or the nextKey, but you need to handle nullability
         // here:
