@@ -106,8 +106,9 @@ class DocListFragment : Fragment() {
                 ?: loadState.source.prepend as? LoadState.Error
                 ?: loadState.append as? LoadState.Error
                 ?: loadState.prepend as? LoadState.Error
+                ?: loadState.refresh as? LoadState.Error
             errorState?.let {
-                binding.errorMsg.text = getString(R.string.woops_error, it.error)
+                binding.errorMsg.text = getString(R.string.woops_error, it.error.localizedMessage)
             }
 
             // show empty list

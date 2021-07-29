@@ -6,6 +6,7 @@ import com.youssefelsa3ed.almatarchallenge.api.Result
 import com.youssefelsa3ed.almatarchallenge.api.SearchBooksModel
 import com.youssefelsa3ed.almatarchallenge.api.SearchService
 import com.youssefelsa3ed.almatarchallenge.model.Doc
+import java.io.IOException
 
 class ItemsPagingSource(
     private val backend: SearchService,
@@ -15,31 +16,36 @@ class ItemsPagingSource(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Doc> {
         val nextPageNumber = params.key ?: 1
-        with(
-            backend.searchBooks(
-                SearchBooksModel(
-                    queryKey,
-                    queryVal,
-                    nextPageNumber
-                )
-            )
-        ) {
-            when (this) {
-                is Result.Success -> {
-                    val nextKey = if (data.isNullOrEmpty())
-                        null
-                    else
-                        nextPageNumber + 1
-                    return LoadResult.Page(
-                        data = data,
-                        prevKey = null, // Only paging forward.
-                        nextKey = nextKey
+        try {
+            with(
+                backend.searchBooks(
+                    SearchBooksModel(
+                        queryKey,
+                        queryVal,
+                        nextPageNumber
                     )
-                }
-                is Result.Error -> {
-                    return LoadResult.Error(exception)
+                )
+            ) {
+                when (this) {
+                    is Result.Success -> {
+                        val nextKey = if (data.isNullOrEmpty())
+                            null
+                        else
+                            nextPageNumber + 1
+                        return LoadResult.Page(
+                            data = data,
+                            prevKey = null, // Only paging forward.
+                            nextKey = nextKey
+                        )
+                    }
+                    is Result.Error -> {
+                        return LoadResult.Error(exception)
+                    }
                 }
             }
+        } catch (e: IOException) {
+            // IOException for network failures.
+            return LoadResult.Error(e)
         }
     }
 
