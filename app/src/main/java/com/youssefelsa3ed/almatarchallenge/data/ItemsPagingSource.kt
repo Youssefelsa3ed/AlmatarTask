@@ -3,26 +3,30 @@ package com.youssefelsa3ed.almatarchallenge.data
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.youssefelsa3ed.almatarchallenge.api.Result
-import com.youssefelsa3ed.almatarchallenge.api.SearchBooksModel
+import com.youssefelsa3ed.almatarchallenge.api.SearchDocsModel
+import com.youssefelsa3ed.almatarchallenge.api.SearchHttpProvider
 import com.youssefelsa3ed.almatarchallenge.api.SearchService
 import com.youssefelsa3ed.almatarchallenge.model.Doc
 import java.io.IOException
 
 class ItemsPagingSource(
-    private val backend: SearchService,
-    private val queryKey: String,
-    private val queryVal: String,
+    private val service: SearchService,
+    private val searchKey: String,
+    private val searchQuery: String,
+    private val httpProvider: SearchHttpProvider
 ) : PagingSource<Int, Doc>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Doc> {
         val nextPageNumber = params.key ?: 1
         try {
             with(
-                backend.searchBooks(
-                    SearchBooksModel(
-                        queryKey,
-                        queryVal,
-                        nextPageNumber
+                service.searchBooks(
+                    httpProvider.provideHttpConnection(
+                        SearchDocsModel(
+                            searchKey,
+                            searchQuery,
+                            nextPageNumber
+                        )
                     )
                 )
             ) {

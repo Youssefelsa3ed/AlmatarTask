@@ -1,5 +1,7 @@
 package com.youssefelsa3ed.almatarchallenge
 
+import com.youssefelsa3ed.almatarchallenge.utils.URLS
+import com.youssefelsa3ed.almatarchallenge.utils.Utils
 import junit.framework.TestCase
 import org.json.JSONObject
 import org.junit.Test
@@ -19,9 +21,7 @@ class UtilsTest : TestCase() {
 
     @Test
     fun testSetBitmapFromEmptyUrl() {
-        val url = ""
-
-        val response = Utils.getImageStreamFromUrl(url)
+        val response = Utils.getImageStreamFromUrl("")
 
         assertEquals(response.first, "Url shouldn't be empty!")
         assertEquals(response.second, null)
@@ -29,9 +29,8 @@ class UtilsTest : TestCase() {
 
     @Test
     fun testSetBitmapFromActualUrl_Valid() {
-        val url = Utils.getIsbnImageUrl("9780618346240")
-
-        val response = Utils.getImageStreamFromUrl(url)
+        val response =
+            Utils.getImageStreamFromUrl("${URLS.ImageUrl.value}9780618346240-M.jpg??default=false")
 
         assertEquals(response.first, "Image loaded successfully")
         assert(response.second != null)
@@ -39,9 +38,7 @@ class UtilsTest : TestCase() {
 
     @Test
     fun testSetBitmapFromActualUrl_Invalid() {
-        val url = Utils.getIsbnImageUrl("")
-
-        val response = Utils.getImageStreamFromUrl(url)
+        val response = Utils.getImageStreamFromUrl("${URLS.ImageUrl.value}-M.jpg?default=false")
 
         assertEquals(response.first, "Invalid URL!")
         assertEquals(response.second, null)

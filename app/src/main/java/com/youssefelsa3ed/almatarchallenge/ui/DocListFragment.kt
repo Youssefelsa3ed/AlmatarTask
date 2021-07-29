@@ -13,13 +13,13 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.DiffUtil
-import com.youssefelsa3ed.almatarchallenge.Injection
 import com.youssefelsa3ed.almatarchallenge.R
-import com.youssefelsa3ed.almatarchallenge.Utils
 import com.youssefelsa3ed.almatarchallenge.databinding.FragmentDocListBinding
+import com.youssefelsa3ed.almatarchallenge.di.Injection
 import com.youssefelsa3ed.almatarchallenge.model.Doc
 import com.youssefelsa3ed.almatarchallenge.ui.adapters.DocsAdapter
 import com.youssefelsa3ed.almatarchallenge.ui.adapters.DocsLoadStateAdapter
+import com.youssefelsa3ed.almatarchallenge.utils.Utils
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest

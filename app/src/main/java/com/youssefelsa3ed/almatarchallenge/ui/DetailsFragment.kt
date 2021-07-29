@@ -8,11 +8,11 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.youssefelsa3ed.almatarchallenge.R
-import com.youssefelsa3ed.almatarchallenge.Utils.getIsbnImageUrl
 import com.youssefelsa3ed.almatarchallenge.databinding.FragmentDetailsBinding
 import com.youssefelsa3ed.almatarchallenge.model.Doc
 import com.youssefelsa3ed.almatarchallenge.model.Isbn
 import com.youssefelsa3ed.almatarchallenge.ui.adapters.IsbnAdapter
+import com.youssefelsa3ed.almatarchallenge.utils.URLS
 import kotlin.math.min
 
 private const val DOC_ITEM = "doc_item"
@@ -96,5 +96,21 @@ class DetailsFragment : Fragment() {
             DetailsFragment().apply {
                 arguments = bundleOf(DOC_ITEM to doc)
             }
+    }
+
+    /***
+     *
+     * Get the full url of an isbn
+     *
+     * @param isbn The isbn of a document.
+     * @param imageQuality The required quality of the image.
+     *
+     * @return true if the object is null, false otherwise.
+     */
+    private fun getIsbnImageUrl(
+        isbn: String,
+        imageQuality: String = "M"
+    ): String {
+        return "${URLS.ImageUrl.value}$isbn-$imageQuality.jpg?default=false"
     }
 }

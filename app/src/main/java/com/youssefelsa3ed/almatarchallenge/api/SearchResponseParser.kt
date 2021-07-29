@@ -1,8 +1,8 @@
 package com.youssefelsa3ed.almatarchallenge.api
 
-import com.youssefelsa3ed.almatarchallenge.Utils
 import com.youssefelsa3ed.almatarchallenge.model.Doc
 import com.youssefelsa3ed.almatarchallenge.model.SearchResponse
+import com.youssefelsa3ed.almatarchallenge.utils.Utils
 import org.json.JSONObject
 
 object SearchResponseParser {

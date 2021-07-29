@@ -5,41 +5,28 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.net.HttpURLConnection
-import java.net.URL
-import java.net.URLEncoder
-
-private const val searchURL = "http://openlibrary.org/search.json"
 
 class SearchService {
     /***
      *
      * Search the OpenLibrary API by documents titles and authors.
      *
-     * @param model a [SearchBooksModel] object contains the query parameters.
+     * @param connection a [HttpURLConnection] The Connection Request Object.
      *
      * @return The response of the search query as a list of [Doc], and an [Exception] if anything went wrong.
      */
     suspend fun searchBooks(
-        model: SearchBooksModel,
+        connection: HttpURLConnection
     ): Result<List<Doc>> {
-        val url = URL(
-            searchURL +
-                    "?${model.queryKey}=${URLEncoder.encode(model.queryVal, "UTF-8")}" +
-                    "&page=${model.page}"
-        )
-        val httpURLConnection = url.openConnection() as HttpURLConnection
-        httpURLConnection.requestMethod = "GET"
-        httpURLConnection.doInput = true
-        httpURLConnection.doOutput = false
         return withContext(Dispatchers.IO) {
-            val responseCode = httpURLConnection.responseCode
+            val responseCode = connection.responseCode
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                val response = httpURLConnection.inputStream
+                val response = connection.inputStream
                     .bufferedReader()
                     .use { it.readText() }
                 Result.Success(SearchResponseParser.parse(JSONObject(response)))
             } else
-                Result.Error(Exception(httpURLConnection.responseMessage))
+                Result.Error(Exception(connection.responseMessage))
         }
     }
 }

@@ -8,9 +8,9 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.youssefelsa3ed.almatarchallenge.Utils
 import com.youssefelsa3ed.almatarchallenge.databinding.IsbnViewItemBinding
 import com.youssefelsa3ed.almatarchallenge.model.Isbn
+import com.youssefelsa3ed.almatarchallenge.utils.Utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

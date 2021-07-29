@@ -1,4 +1,4 @@
-package com.youssefelsa3ed.almatarchallenge
+package com.youssefelsa3ed.almatarchallenge.utils
 
 import org.json.JSONObject
 import java.io.FileNotFoundException
@@ -72,21 +72,5 @@ object Utils {
         obj: Any?
     ): Boolean {
         return obj == null
-    }
-
-    /***
-     *
-     * Get the full url of an isbn
-     *
-     * @param isbn The isbn of a document.
-     * @param imageQuality The required quality of the image.
-     *
-     * @return true if the object is null, false otherwise.
-     */
-    fun getIsbnImageUrl(
-        isbn: String,
-        imageQuality: String = "M"
-    ): String {
-        return "https://covers.openlibrary.org/b/isbn/$isbn-$imageQuality.jpg?default=false"
     }
 }
