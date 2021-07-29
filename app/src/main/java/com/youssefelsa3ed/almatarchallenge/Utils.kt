@@ -1,9 +1,8 @@
 package com.youssefelsa3ed.almatarchallenge
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import org.json.JSONObject
 import java.io.FileNotFoundException
+import java.io.InputStream
 import java.net.HttpRetryException
 import java.net.URL
 
@@ -23,24 +22,10 @@ object Utils {
         jsonObject: JSONObject,
         key: String
     ) {
-        for (i in 0 until jsonObject.getJSONArray(key).length())
-            list.add(jsonObject.getJSONArray(key).getString(i))
-    }
-
-    /***
-     *
-     * Check if a [JSONObject] contains a specific key or not.
-     *
-     * @param jsonObject the [JSONObject] to extract data from.
-     * @param key The key of the [String] item in the Json Object.
-     *
-     * @return a [String] if the json object has this key, empty [String] otherwise
-     */
-    fun getStringFromJsonObject(
-        jsonObject: JSONObject,
-        key: String
-    ): String {
-        return if (jsonObject.isNull(key)) "" else jsonObject.getString(key)
+        jsonObject.optJSONArray(key)?.let {
+            for (i in 0 until it.length())
+                list.add(it.getString(i))
+        }
     }
 
     /***
@@ -49,15 +34,16 @@ object Utils {
      *
      * @param url The url of the image.
      *
-     * @return a Pair of response message as a [String] and the [Bitmap] of the image if loaded successfully, null otherwise.
+     * @return a Pair of response message as a [String] and the [InputStream] of the image if loaded successfully, null otherwise.
      */
-    fun setBitmapFromUrl(
+    fun getImageStreamFromUrl(
         url: String
-    ): Pair<String?, Bitmap?> {
+    ): Pair<String?, InputStream?> {
+        if (url.isEmpty()) return "Url shouldn't be empty!" to null
         val errorMsg: String?
         try {
-            val inputStream = URL("${url}?default=false").openStream()
-            return "Image loaded successfully" to BitmapFactory.decodeStream(inputStream)
+            val inputStream = URL(url).openStream()
+            return "Image loaded successfully" to inputStream
         } catch (e: Exception) {
             errorMsg = when (e) {
                 is HttpRetryException -> {
@@ -86,5 +72,21 @@ object Utils {
         obj: Any?
     ): Boolean {
         return obj == null
+    }
+
+    /***
+     *
+     * Get the full url of an isbn
+     *
+     * @param isbn The isbn of a document.
+     * @param imageQuality The required quality of the image.
+     *
+     * @return true if the object is null, false otherwise.
+     */
+    fun getIsbnImageUrl(
+        isbn: String,
+        imageQuality: String = "M"
+    ): String {
+        return "https://covers.openlibrary.org/b/isbn/$isbn-$imageQuality.jpg?default=false"
     }
 }

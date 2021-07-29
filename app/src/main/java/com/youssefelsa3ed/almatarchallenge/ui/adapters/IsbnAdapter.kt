@@ -1,6 +1,6 @@
 package com.youssefelsa3ed.almatarchallenge.ui.adapters
 
-import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.InputStream
 
 class IsbnAdapter(
     private val values: List<Isbn>,
@@ -36,9 +37,10 @@ class IsbnAdapter(
                 CoroutineScope(Dispatchers.Main).launch {
                     run {
                         withContext(Dispatchers.IO) {
-                            val response: Pair<String?, Bitmap?> = Utils.setBitmapFromUrl(url)
+                            val response: Pair<String?, InputStream?> =
+                                Utils.getImageStreamFromUrl(url)
                             errorMsg = response.first
-                            bitmap = response.second
+                            bitmap = BitmapFactory.decodeStream(response.second)
                         }
                         notifyItemChanged(position)
                     }

@@ -37,8 +37,8 @@ object SearchResponseParser {
 
                     Doc(
                         authors, keys, isbns,
-                        Utils.getStringFromJsonObject(item, "title"),
-                        Utils.getStringFromJsonObject(item, "key")
+                        item.optString("title"),
+                        item.optString("key")
                     )
                 }
             ).docs

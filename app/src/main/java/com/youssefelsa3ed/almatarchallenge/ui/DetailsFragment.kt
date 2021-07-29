@@ -8,6 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.youssefelsa3ed.almatarchallenge.R
+import com.youssefelsa3ed.almatarchallenge.Utils.getIsbnImageUrl
 import com.youssefelsa3ed.almatarchallenge.databinding.FragmentDetailsBinding
 import com.youssefelsa3ed.almatarchallenge.model.Doc
 import com.youssefelsa3ed.almatarchallenge.model.Isbn
@@ -38,7 +39,7 @@ class DetailsFragment : Fragment() {
                     .filter { url ->
                         !url.isNullOrEmpty()
                     }.map { url ->
-                        Isbn("https://covers.openlibrary.org/b/isbn/$url-M.jpg", null)
+                        Isbn(getIsbnImageUrl(url ?: ""), null)
                     }.let { list ->
                         list.slice(0 until min(5, list.size))
                     }
