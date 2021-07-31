@@ -15,7 +15,7 @@ class SearchService {
      *
      * @return The response of the search query as a list of [Doc], and an [Exception] if anything went wrong.
      */
-    suspend fun searchBooks(
+    suspend fun searchDocs(
         connection: HttpURLConnection
     ): Result<List<Doc>> {
         return withContext(Dispatchers.IO) {

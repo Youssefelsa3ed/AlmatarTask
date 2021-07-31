@@ -34,7 +34,7 @@ class DetailsFragment : Fragment() {
             doc = it.getParcelable(DOC_ITEM)
             adapter = IsbnAdapter(
                 if (doc?.isbn.isNullOrEmpty())
-                    listOf()
+                    emptyList()
                 else doc?.isbn!!
                     .filter { url ->
                         !url.isNullOrEmpty()

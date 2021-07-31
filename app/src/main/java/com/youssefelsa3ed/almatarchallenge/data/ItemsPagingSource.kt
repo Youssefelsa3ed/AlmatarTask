@@ -20,7 +20,7 @@ class ItemsPagingSource(
         val nextPageNumber = params.key ?: 1
         try {
             with(
-                service.searchBooks(
+                service.searchDocs(
                     httpProvider.provideHttpConnection(
                         SearchDocsModel(
                             searchKey,

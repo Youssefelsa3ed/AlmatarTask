@@ -43,7 +43,7 @@ object SearchResponseParser {
                 }
             ).docs
         } catch (e: Exception) {
-            listOf()
+            emptyList()
         }
     }
 }

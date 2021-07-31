@@ -5,13 +5,12 @@ import com.youssefelsa3ed.almatarchallenge.utils.Utils
 import junit.framework.TestCase
 import org.json.JSONObject
 import org.junit.Test
-import org.mockito.Mockito
 
 class UtilsTest : TestCase() {
 
     fun testSetStringItemsToList_Empty() {
         val key = "array"
-        val jsonObject = Mockito.mock(JSONObject::class.java)
+        val jsonObject = JSONObject()
         val list = mutableListOf<String>()
 
         Utils.setStringItemsToList(list, jsonObject, key)

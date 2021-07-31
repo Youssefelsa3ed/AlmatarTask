@@ -37,6 +37,10 @@ class SearchRepository(
                     httpProvider = searchHttpProvider
                 )
             }
-        ).flow.map { it.filter { docItem: Doc -> !docItem.authorName.isNullOrEmpty() } }
+        ).flow.map {
+            it.filter { doc: Doc ->
+                !doc.authorName.isNullOrEmpty()
+            }
+        }
     }
 }
